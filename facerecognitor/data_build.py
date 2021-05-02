@@ -5,7 +5,7 @@ import cvlib as cv
 
 
 # open webcam
-webcam = cv2.VideoCapture('dataset_3.mp4')
+webcam = cv2.VideoCapture('dataset_2.mp4')
 
 counter = 0
 
@@ -28,7 +28,7 @@ while webcam.isOpened():
         Y = startY - 10 if startY - 10 > 10 else startY + 10
 
         counter += 1
-        label, filename = "Frame captured  - " + str(counter), 'dataset/dip/frame_'+str(counter) + '.png'
+        label, filename = "Frame captured  - " + str(counter), 'dataset/juy/frame_'+str(counter) + '.png'
         
         cv2.imwrite(filename, frame)
         
