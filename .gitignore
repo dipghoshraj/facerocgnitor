@@ -103,6 +103,7 @@ celerybeat.pid
 
 *.mp4
 *.png
+*.jpg
 
 # Environments
 .env
