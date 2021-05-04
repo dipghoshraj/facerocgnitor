@@ -17,7 +17,7 @@ import glob
 
 
 # initial parameters
-epochs = 100
+epochs = 40
 lr = 1e-3
 batch_size = 64
 img_dims = (96,96,3)
@@ -41,12 +41,15 @@ for img in image_files:
     data.append(image)
 
     label = img.split(os.path.sep)[-2]
-    if label == "juy":
+    if label == "dip":
         label = 1
     else:
         label = 0
         
     labels.append([label])
+
+# print(data)
+# print(labels)
 
 
 # pre-processing
@@ -124,13 +127,13 @@ opt = Adam(lr=lr, decay=lr/epochs)
 model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
 # train the model
-H = model.fit_generator(aug.flow(trainX, trainY, batch_size=batch_size),
+H = model.fit(aug.flow(trainX, trainY, batch_size=batch_size),
                         validation_data=(testX,testY),
                         steps_per_epoch=len(trainX) // batch_size,
                         epochs=epochs, verbose=1)
 
 # save the model to disk
-model.save('gender_detection.model')
+model.save('face.model')
 
 
 
@@ -140,8 +143,8 @@ plt.figure()
 N = epochs
 plt.plot(np.arange(0,N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0,N), H.history["val_loss"], label="val_loss")
-plt.plot(np.arange(0,N), H.history["acc"], label="train_acc")
-plt.plot(np.arange(0,N), H.history["val_acc"], label="val_acc")
+plt.plot(np.arange(0,N), H.history["accuracy"], label="train_acc")
+plt.plot(np.arange(0,N), H.history["val_accuracy"], label="val_acc")
 
 plt.title("Training Loss and Accuracy")
 plt.xlabel("Epoch #")
